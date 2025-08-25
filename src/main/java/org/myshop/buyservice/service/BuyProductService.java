@@ -29,5 +29,5 @@ public class BuyProductService {
     public ResponseEntity<List<BuyProduct>> getBuyProduct(UUID userId){
         return ResponseEntity.ok().body(buyProductRepository.findBuyProductsByUserId(userId));
     }
-    
+
 }
