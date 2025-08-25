@@ -22,12 +22,12 @@ public class BuyProductService {
     public ResponseEntity<BuyProduct> buyProduct(BuyProduct buyProduct){
         buyProduct.setBuyAt(LocalDate.now());
         buyProduct.setId(UUID.randomUUID());
-        return ResponseEntity.ok().body(buyProductRepository.save(buyProduct));
+        return ResponseEntity.ok(buyProductRepository.save(buyProduct));
     }
 
 
     public ResponseEntity<List<BuyProduct>> getBuyProduct(UUID userId){
-        return ResponseEntity.ok().body(buyProductRepository.findBuyProductsByUserId(userId));
+        return ResponseEntity.ok(buyProductRepository.findBuyProductsByUserId(userId));
     }
 
 }
