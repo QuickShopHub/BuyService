@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +16,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Favorites {
+public class Favorite {
 
     @Id
     private UUID id;

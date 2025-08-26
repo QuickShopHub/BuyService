@@ -3,14 +3,15 @@ package org.myshop.buyservice.controller;
 
 import jakarta.validation.Valid;
 import org.myshop.buyservice.repository.BuyProduct;
-import org.myshop.buyservice.repository.BuyProductRepository;
-import org.myshop.buyservice.repository.Favorites;
+import org.myshop.buyservice.repository.Favorite;
 import org.myshop.buyservice.service.BuyProductService;
 import org.myshop.buyservice.service.FavoritesService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -26,31 +27,39 @@ public class BuyProductController {
         this.favoritesService = favoritesService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/buy")
     public ResponseEntity<BuyProduct> buyProduct(@Valid @RequestBody BuyProduct  buyProduct){
         return buyProductService.buyProduct(buyProduct);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/buy")
     public ResponseEntity<List<BuyProduct>> getBuyProduct(@RequestParam UUID userID){
         return buyProductService.getBuyProduct(userID);
     }
 
-
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/favorites")
-    public ResponseEntity<Favorites> setFavorites(@Valid @RequestBody Favorites favorites){
+    public ResponseEntity<Favorite> setFavorites(@Valid @RequestBody Favorite favorites){
         return favoritesService.setFavorites(favorites);
     }
-
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/favorites")
-    public ResponseEntity<List<Favorites>> getFavorites(@RequestParam UUID userID){
+    public ResponseEntity<List<Favorite>> getFavorites(@RequestParam UUID userID){
         return favoritesService.getFavorites(userID);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping(path = "/favorites")
-    public ResponseEntity<Favorites> deleteFavorites(@RequestParam UUID id){
-        return favoritesService.deleteFavorites(id);
+    public ResponseEntity<Favorite> deleteFavorites(@RequestParam UUID userId, @RequestParam UUID productId){
+        return favoritesService.deleteFavorites(userId, productId);
     }
 
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping(path = "/favorites_product")
+    public ResponseEntity<Map<String, Boolean>> getFavoritesProduct(@RequestParam UUID userID, @RequestParam UUID productId){
+        return favoritesService.getFavorites(userID,  productId);
+    }
 }

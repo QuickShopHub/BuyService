@@ -7,7 +7,7 @@ spring:
 
 
 server:
-  port: 8445
+  port: 8446
   ssl:
     enabled: true
     key-store: classpath:keystore.p12

@@ -32,6 +32,7 @@ public class BuyProduct {
     @Column(name = "user_id")
     private UUID userID;
 
+    @Column(name = "buy_at")
     private LocalDate buyAt;
 
     @NotNull(message = "price must be")
