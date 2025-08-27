@@ -13,16 +13,19 @@ import java.util.UUID;
 public class BuyProductService {
 
     private final BuyProductRepository buyProductRepository;
+    private final KafkaProducer kafkaProducer ;
 
-
-    public BuyProductService(BuyProductRepository buyProductRepository) {
+    public BuyProductService(BuyProductRepository buyProductRepository, KafkaProducer kafkaProducer) {
         this.buyProductRepository = buyProductRepository;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public ResponseEntity<BuyProduct> buyProduct(BuyProduct buyProduct){
         buyProduct.setBuyAt(LocalDate.now());
         buyProduct.setId(UUID.randomUUID());
-        return ResponseEntity.ok(buyProductRepository.save(buyProduct));
+        BuyProduct res = buyProductRepository.save(buyProduct);
+        kafkaProducer.sendUpdate(buyProduct.getProductId());
+        return ResponseEntity.ok(res);
     }
 
 
