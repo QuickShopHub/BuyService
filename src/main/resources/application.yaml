@@ -4,8 +4,8 @@ spring:
     password: ${DB_PASSWORD}
     url: ${DB_URL}
   kafka:
+    bootstrap-servers: ${KAFKA_SERVER}
     producer:
-      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
@@ -14,10 +14,6 @@ spring:
 
 server:
   port: 8446
-  ssl:
-    enabled: true
-    key-store: classpath:keystore.p12
-    key-store-password: changeit
-    key-store-type: PKCS12
+
 
 
